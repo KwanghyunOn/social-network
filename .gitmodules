@@ -1,0 +1,3 @@
+[submodule "GEMSEC"]
+	path = GEMSEC
+	url = https://github.com/benedekrozemberczki/GEMSEC.git
