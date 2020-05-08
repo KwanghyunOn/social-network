@@ -1,25 +1,44 @@
 import community as community_louvain
 import networkx as nx
 import matplotlib.pyplot as plt
+import json
 
 
-G = nx.erdos_renyi_graph(30, 0.05)
-partition = community_louvain.best_partition(G)
-
-#drawing
-size = float(len(set(partition.values())))
-pos = nx.spring_layout(G)
-count = 0.
-for com in set(partition.values()) :
-    count = count + 1.
-    list_nodes = [nodes for nodes in partition.keys()
-                                if partition[nodes] == com]
-    nx.draw_networkx_nodes(G, pos, list_nodes, node_size = 20,
-                                node_color = str(count / size))
+def load(root, delimiter):
+    G = nx.read_edgelist(root, delimiter=delimiter)
+    return G
 
 
-nx.draw_networkx_edges(G, pos, alpha=0.5)
-plt.show()
+if __name__ == "__main__":
+    root = "datasets/soc-karate.edges"
+    delimiter = " "
+    G = load(root, delimiter=delimiter)
+    print(f"V = {G.number_of_nodes()}, E = {G.number_of_edges()}")
+    partition = community_louvain.best_partition(G)
+    par_rev = dict()
+    for node, com in partition.items():
+        if com not in par_rev:
+            par_rev[com] = list()
+        par_rev[com].append(int(node))
+    
+    save_path = "louvain_result.json"
+    with open(save_path, 'w') as fp:
+        json.dump(par_rev, fp)
+
+# #drawing
+# size = float(len(set(partition.values())))
+# pos = nx.spring_layout(G)
+# count = 0.
+# for com in set(partition.values()) :
+#     count = count + 1.
+#     list_nodes = [nodes for nodes in partition.keys()
+#                                 if partition[nodes] == com]
+#     nx.draw_networkx_nodes(G, pos, list_nodes, node_size = 20,
+#                                 node_color = str(count / size))
+
+
+# nx.draw_networkx_edges(G, pos, alpha=0.5)
+# plt.show()
 
 
 
