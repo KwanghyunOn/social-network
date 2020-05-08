@@ -43,7 +43,8 @@ def _community_layout(g, partition):
     # combine positions
     pos = dict()
     for node in g.nodes():
-        pos[node] = pos_communities[node] + pos_nodes[node]
+        # pos[node] = pos_communities[node] + pos_nodes[node]
+        pos[node] = pos_communities[node]
 
     return pos
 
