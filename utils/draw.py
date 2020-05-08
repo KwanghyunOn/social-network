@@ -108,7 +108,6 @@ def test():
 
     f = plt.figure()
     nx.draw(g, pos, node_color=list(partition.values()), ax=f.add_subplot(111))
-    f.savefig("graph.png")
     
     return
 
