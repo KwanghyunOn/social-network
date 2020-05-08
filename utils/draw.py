@@ -11,9 +11,7 @@ def draw_community(filepath, community_list, savepath):
             partition[str(node)] = i
 
     plt.figure(figsize=(10,10))
-    plt.ylim(-5.0, 5.0)
     pos = _community_layout(g, partition)
-    print(pos)
     nx.draw(g, pos, node_color=list(partition.values()))
     plt.savefig(savepath)
 
@@ -46,8 +44,7 @@ def _community_layout(g, partition):
     # combine positions
     pos = dict()
     for node in g.nodes():
-        # pos[node] = pos_communities[node] + pos_nodes[node]
-        pos[node] = pos_communities[node]
+        pos[node] = pos_communities[node] + pos_nodes[node]
 
     return pos
 
