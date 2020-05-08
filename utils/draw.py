@@ -10,20 +10,9 @@ def draw_community(filepath, community_list, savepath):
         for node in community:
             partition[str(node)] = i
 
-    size = float(len(set(partition.values())))
-    pos = nx.spring_layout(g)
-
-    count = 0.
-    for com in set(partition.values()):
-        count = count + 1.
-        list_nodes = [nodes for nodes in partition.keys() if partition[nodes] == com]
-        nx.draw_networkx_nodes(g, pos, list_nodes, node_size=20, node_color=str(count / size))
-    nx.draw_networkx_edges(g, pos, alpha=0.5)
+    pos = _community_layout(g, partition)
+    nx.draw(g, pos, node_color=list(partition.values()))
     plt.savefig(savepath)
-    # f = plt.figure()
-    # pos = _community_layout(g, partition)
-    # nx.draw(g, pos, node_color=list(partition.values()), ax=f.add_subplot(111))
-    # f.savefig(savepath)
 
 
 def _community_layout(g, partition):
