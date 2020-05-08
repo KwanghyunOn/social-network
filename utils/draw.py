@@ -3,7 +3,20 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 
-def community_layout(g, partition):
+def draw_community(filepath, community_list, savepath):
+    g = nx.read_edgelist(filepath, delimiter=" ")
+    partition = dict()
+    for i, community in enumerate(community_list):
+        for node in community:
+            partition[str(node)] = i
+
+    pos = _community_layout(g, partition)
+    f = plt.figure()
+    nx.draw(g, pos, node_color=list(partition.values()), ax=f.add_subplot(111))
+    f.savefig(savepath)
+
+
+def _community_layout(g, partition):
     """
     Compute the layout for a modular graph.
 
