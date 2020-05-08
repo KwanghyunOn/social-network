@@ -12,6 +12,7 @@ def draw_community(filepath, community_list, savepath):
 
     plt.figure(figsize=(10,10))
     pos = _community_layout(g, partition)
+    print(pos)
     nx.draw(g, pos, node_color=list(partition.values()))
     plt.savefig(savepath)
 
